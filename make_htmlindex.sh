@@ -30,6 +30,7 @@ cat > www/htmlindex.html << EOF
 EOF
 if [ -f stylesheet.css ] ; then
 	echo "<LINK HREF=\"stylesheet.css\" REL=\"stylesheet\" TYPE=\"text/css\">" >> www/htmlindex.html
+	cp stylesheet.css www
 fi
 cat >> www/htmlindex.html << EOF
 <title>Untitled</title>
