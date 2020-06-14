@@ -42,11 +42,24 @@ fi
 NOW=`date`
 
 $banner htmlindex >> Makefile
+indexhtml=$(sed -n 's/TYPE *//p' imagelist | head -1)
 
-echo "tag/htmlindex: html/htmlindex.htm |tag" >> Makefile
+NOW=`date`
+mkdir -p www
+
+if [ $indexhtml = yes ] ; then
+	echo "tag/htmlindex: www/index.html  html/htmlindex.htm |tag" >> Makefile
+else
+	echo "tag/htmlindex: html/htmlindex.htm |tag" >> Makefile
+fi
+
+
 echo "	touch tag/htmlindex" >> Makefile
 echo "html/htmlindex.htm: tag/photo /usr/local/bin/make_htmlindex photoheader" >> Makefile
 echo "	make_htmlindex" >> Makefile
+if [ "$indexhtml" =  'HTMLINDEX' ] ; then
+    echo "	cp www/htmlindex.html www/index.html" >> Makefile
+fi
 
 echo "tag/clean.htmlindex: |tag" >> Makefile
 echo "	- rm -f htmlindex.html" >> Makefile
