@@ -67,7 +67,15 @@ for f in images/thumb/* ; do
 	if [ $col = 0 ] ; then
 		output '    <tr class="photorow">'
 	fi
-	output "        <td class=\"photocell\"><a href=\"images/fullsize/$b\"><img src=\"$f\"></a></td>"
+	c=${b%.*}
+	if [ -f  images/fullsize/$c.mov ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.mov\"><img src=\"$f\"></a></td>"
+	elif [ -f  images/fullsize/$c.MOV ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.MOV\"><img src=\"$f\"></a></td>"
+	elif [ -f  images/fullsize/$c.mp4 ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.mp4\"><img src=\"$f\"></a></td>"
+	elif [ -f  images/fullsize/$c.MP4 ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.MP4\"><img src=\"$f\"></a></td>"
+	elif [ -f  images/fullsize/$c.avi ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.avi\"><img src=\"$f\"></a></td>"
+	elif [ -f  images/fullsize/$c.AVI ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.AVI\"><img src=\"$f\"></a></td>"
+	else output "        <td class=\"photocell\"><a href=\"images/fullsize/$b\"><img src=\"$f\"></a></td>"
+	fi
 	col=$((col+1))
 	if [ $col = $COLS ] ; then
 		col=0
