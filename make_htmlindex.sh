@@ -54,8 +54,30 @@ fi
 
 output '<table class="phototable">'
 prev=none
-
 col=0
+
+videofile(){
+	ext=$1
+	output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.html\"><img src=\"$f\"></a></td>"
+	echo "<html>" > images/fullsize/$c.html
+	echo "<head>" >> images/fullsize/$c.html
+	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" >> images/fullsize/$c.html
+	echo "<LINK HREF=\"stylesheet.css\" REL=\"stylesheet\" TYPE=\"text/css\">" >> images/fullsize/$c.html
+	echo "<title>$b</title>" >> images/fullsize/$c.html
+	echo "</head>" >> images/fullsize/$c.html
+
+	echo "	<body>" >> images/fullsize/$c.html
+	echo "		<video  controls>" >> images/fullsize/$c.html
+	echo "			<source src=\"$c.$ext\">" >> images/fullsize/$c.html
+	echo "			Sorry, no video." >> images/fullsize/$c.html
+	echo "		</video>" >> images/fullsize/$c.html
+	echo "	</body>" >> images/fullsize/$c.html
+	echo "</html>" >> images/fullsize/$c.html
+	if [ -f stylesheet.css ] ; then
+		cp stylesheet.css images/fullsize
+	fi
+}
+
 for f in images/thumb/* ; do
 	b=$(basename $f)
 	display -geometry +10+10 images/medium/$b &
@@ -68,12 +90,12 @@ for f in images/thumb/* ; do
 		output '    <tr class="photorow">'
 	fi
 	c=${b%.*}
-	if [ -f  images/fullsize/$c.mov ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.mov\"><img src=\"$f\"></a></td>"
-	elif [ -f  images/fullsize/$c.MOV ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.MOV\"><img src=\"$f\"></a></td>"
-	elif [ -f  images/fullsize/$c.mp4 ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.mp4\"><img src=\"$f\"></a></td>"
-	elif [ -f  images/fullsize/$c.MP4 ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.MP4\"><img src=\"$f\"></a></td>"
-	elif [ -f  images/fullsize/$c.avi ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.avi\"><img src=\"$f\"></a></td>"
-	elif [ -f  images/fullsize/$c.AVI ] ; then output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.AVI\"><img src=\"$f\"></a></td>"
+	if [ -f  images/fullsize/$c.mov ] ; then videofile mov
+	elif [ -f  images/fullsize/$c.MOV ] ; then videofile MOV
+	elif [ -f  images/fullsize/$c.mp4 ] ; then videofile mp4
+	elif [ -f  images/fullsize/$c.MP4 ] ; then videofile MP4
+	elif [ -f  images/fullsize/$c.avi ] ; then videofile avi
+	elif [ -f  images/fullsize/$c.AVI ] ; then videofile AVI
 	else output "        <td class=\"photocell\"><a href=\"images/fullsize/$b\"><img src=\"$f\"></a></td>"
 	fi
 	col=$((col+1))
