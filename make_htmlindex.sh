@@ -58,7 +58,7 @@ col=0
 
 videofile(){
 	ext=$1
-	output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.html\"><img src=\"$f\"></a></td>"
+	output "        <td class=\"photocell\"><a href=\"images/fullsize/$c.html\"><img src=\"$f\"><br>video</a></td>"
 	echo "<html>" > images/fullsize/$c.html
 	echo "<head>" >> images/fullsize/$c.html
 	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" >> images/fullsize/$c.html
